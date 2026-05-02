@@ -4,6 +4,32 @@
 # 𝐀𝐍𝐘 𝐈𝐒𝐒𝐔𝐄𝐒 𝐎𝐑 𝐀𝐃𝐃𝐈𝐍𝐆 𝐌𝐎𝐑𝐄 𝐓𝐇𝐈𝐍𝐆𝐬 𝐂𝐀𝐍 𝐂𝐎𝐍𝐓𝐀𝐂𝐓 𝐌𝐄
 # ----------------------------------------
 import os
+from flask import Flask
+from threading import Thread
+from pyrogram import Client
+
+web_app = Flask(__name__)
+
+@web_app.route("/")
+def home():
+    return "Alive"
+
+def run_web():
+    port = int(os.environ.get("PORT", 10000))
+    web_app.run(host="0.0.0.0", port=port, threaded=True)
+
+Thread(target=run_web, daemon=True).start()
+
+bot = Client(
+    "bot",
+    api_id=int(os.environ["35915041"]),
+    api_hash=os.environ["011fabdce4a5547ce2e56533862445ad"],
+    bot_token=os.environ["8676962323:AAFinOsrTP_RXBRcT8ycq6bOJYiMVqyRidM"]
+)
+
+print("Bot Starting...")
+bot.run()
+import os
 from pyrogram import Client
 from config import API_ID, API_HASH, BOT_TOKEN
 import logging
